@@ -18,6 +18,8 @@ public class ServiceCategory extends Auditable {
 
         @Column(name = "category_description", columnDefinition = "TEXT")
         private String categoryDescription;
+        @Column(name = "image_url", length = 500)
+        private String imageUrl;
 
     public Long getCategoryId() {
         return categoryId;
@@ -41,5 +43,13 @@ public class ServiceCategory extends Auditable {
 
     public void setCategoryDescription(String categoryDescription) {
         this.categoryDescription = categoryDescription;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

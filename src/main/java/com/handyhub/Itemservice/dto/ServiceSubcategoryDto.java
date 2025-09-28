@@ -7,7 +7,7 @@ public class ServiceSubcategoryDto {
     private String subcategoryName;
     private String subcategoryDescription;
     private Integer averageDuration;
-
+    private String imageUrl;
     public Long getSubcategoryId() {
         return subcategoryId;
     }
@@ -46,5 +46,13 @@ public class ServiceSubcategoryDto {
 
     public void setAverageDuration(Integer averageDuration) {
         this.averageDuration = averageDuration;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

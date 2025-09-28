@@ -34,7 +34,7 @@ public class UserDTO {
     // AuditInfo
     private Set<Long> roles;
 
-
+    private Set<RoleDTO> rolesData;
     public Long getId() {
         return id;
     }
@@ -193,5 +193,13 @@ public class UserDTO {
 
     public void setRoles(Set<Long> roles) {
         this.roles = roles;
+    }
+
+    public Set<RoleDTO> getRolesData() {
+        return rolesData;
+    }
+
+    public void setRolesData(Set<RoleDTO> rolesData) {
+        this.rolesData = rolesData;
     }
 }

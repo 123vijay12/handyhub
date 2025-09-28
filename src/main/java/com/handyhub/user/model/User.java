@@ -27,6 +27,8 @@ public class User extends BaseEntity{
     )
     private Set<Role> roles = new HashSet<>();
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private WorkerProfile workerProfile; // null if user is not a worker
 
     public Long getId() {
         return id;

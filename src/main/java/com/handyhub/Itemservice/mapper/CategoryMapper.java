@@ -11,6 +11,7 @@ public class CategoryMapper {
         dto.setCategoryId(entity.getCategoryId());
         dto.setCategoryName(entity.getCategoryName());
         dto.setCategoryDescription(entity.getCategoryDescription());
+        dto.setImageUrl(entity.getImageUrl());
         return dto;
     }
 
@@ -20,6 +21,7 @@ public class CategoryMapper {
         entity.setCategoryId(dto.getCategoryId());
         entity.setCategoryName(dto.getCategoryName());
         entity.setCategoryDescription(dto.getCategoryDescription());
+        //entity.setImageUrl(dto.getImageUrl());
         return entity;
     }
 }

@@ -14,6 +14,7 @@ public class SubcategoryMapper {
         dto.setSubcategoryName(entity.getSubcategoryName());
         dto.setSubcategoryDescription(entity.getSubcategoryDescription());
         dto.setAverageDuration(entity.getAverageDuration());
+        dto.setImageUrl(entity.getImageUrl());
         return dto;
     }
 

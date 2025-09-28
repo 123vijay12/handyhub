@@ -29,6 +29,9 @@ public class ServiceSubcategory {
      */
     @Column(name = "average_duration")
     private Integer averageDuration;
+    @Column(name = "image_url", length = 500)
+    private String imageUrl;
+
 
     public Long getSubcategoryId() {
         return subcategoryId;
@@ -68,5 +71,13 @@ public class ServiceSubcategory {
 
     public void setAverageDuration(Integer averageDuration) {
         this.averageDuration = averageDuration;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

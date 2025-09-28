@@ -1,5 +1,6 @@
 package com.handyhub.user.mapper;
 
+import com.handyhub.user.dto.RoleDTO;
 import com.handyhub.user.dto.UserDTO;
 import com.handyhub.user.model.*;
 
@@ -56,6 +57,12 @@ public class UserMapper {
                     .map(Role::getId)
                     .collect(Collectors.toSet());
             dto.setRoles(roles);
+
+            Set<RoleDTO> rolesData = user.getRoles().stream()
+                    .map(RoleMapper::toDto)
+                    .collect(Collectors.toSet());
+
+            dto.setRolesData(rolesData);
         }
 
         return dto;

@@ -4,6 +4,8 @@ public class ServiceCategoryDto {
     private Long categoryId;
     private String categoryName;
     private String categoryDescription;
+    private String imageUrl;
+
 
     public Long getCategoryId() {
         return categoryId;
@@ -27,5 +29,13 @@ public class ServiceCategoryDto {
 
     public void setCategoryDescription(String categoryDescription) {
         this.categoryDescription = categoryDescription;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

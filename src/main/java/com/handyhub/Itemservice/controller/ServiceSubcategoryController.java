@@ -32,11 +32,6 @@ public class ServiceSubcategoryController {
         return ResponseEntity.ok(service.getAll());
     }
 
-    @GetMapping("/by-category/{categoryId}")
-    public ResponseEntity<List<ServiceSubcategoryDto>> listByCategory(@PathVariable Long categoryId) {
-        return ResponseEntity.ok(service.listByCategory(categoryId));
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<ServiceSubcategoryDto> update(@PathVariable Long id,
                                                         @RequestBody ServiceSubcategoryDto dto) {
