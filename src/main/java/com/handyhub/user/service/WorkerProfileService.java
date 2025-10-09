@@ -14,7 +14,7 @@ public interface WorkerProfileService {
     List<WorkerProfileDTO> getAvailableWorkers();
     List<WorkerProfileDTO> searchByArea(String area);
     List<WorkerProfileDTO> getWorkersBySubCategory(Long subCategoryId);
-
+    public List<WorkerProfileDTO> getWorkersByCategory(Long categoryId);
     List<WorkerProfileDTO> searchWorkers(Long subCategoryId, List<Long> skillIds,
                                          String serviceArea, int page, int size);
 

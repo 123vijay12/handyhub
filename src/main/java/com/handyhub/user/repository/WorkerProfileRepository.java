@@ -21,6 +21,9 @@ public interface WorkerProfileRepository extends JpaRepository<WorkerProfile, Lo
 
     // Find by SubCategory
     List<WorkerProfile> findByServiceSubcategory_SubcategoryId(Long subCategoryId);
+    // Find workers by Category ID
+    List<WorkerProfile> findByServiceCategory_CategoryId(Long categoryId);
+
 
     // Search by subcategory, skills, service area with pagination
     @Query("SELECT DISTINCT w FROM WorkerProfile w JOIN w.skills s " +

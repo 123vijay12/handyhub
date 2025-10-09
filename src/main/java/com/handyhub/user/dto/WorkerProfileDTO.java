@@ -22,6 +22,9 @@ public class WorkerProfileDTO {
     private Set<RatingDTO> ratings;  // detailed ratings
     private Set<String> skills;
 
+    private Long subCategoryId;
+    private Long categoryId;
+
     public Long getId() {
         return id;
     }
@@ -116,5 +119,21 @@ public class WorkerProfileDTO {
 
     public void setUserDTO(UserDTO userDTO) {
         this.userDTO = userDTO;
+    }
+
+    public Long getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public void setSubCategoryId(Long subCategoryId) {
+        this.subCategoryId = subCategoryId;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }

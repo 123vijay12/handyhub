@@ -73,4 +73,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleConflict(ConflictException ex) {
         return new ResponseEntity<>(buildResponse(ex.getMessage(), HttpStatus.CONFLICT), HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler(EntityNotFound.class)
+    public ResponseEntity<?> handleEntityNotFound(EntityNotFound ex) {
+        return new ResponseEntity<>(buildResponse(ex.getMessage(), HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+    }
+
 }

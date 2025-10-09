@@ -41,6 +41,18 @@ public class WorkerProfileMapper {
         );
         dto.setSkills(entity.getSkills().stream().map(Skill::getName).collect(Collectors.toSet()));
         dto.setUserDTO(userDTO);
+        if (entity.getServiceCategory() != null) {
+            dto.setCategoryId(entity.getServiceCategory().getCategoryId());
+        } else {
+            dto.setCategoryId(null); // or default value
+        }
+
+        if (entity.getServiceSubcategory() != null) {
+            dto.setSubCategoryId(entity.getServiceSubcategory().getSubcategoryId());
+        } else {
+            dto.setSubCategoryId(null); // or default value
+        }
+
         return dto;
     }
 
@@ -59,8 +71,6 @@ public class WorkerProfileMapper {
         entity.setAvailable(dto.isAvailable());
         entity.setServiceArea(dto.getServiceArea());
         entity.setUser(user);
-
-
         return entity;
     }
 }

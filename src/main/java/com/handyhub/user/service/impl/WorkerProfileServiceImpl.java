@@ -1,5 +1,9 @@
 package com.handyhub.user.service.impl;
 
+import com.handyhub.Itemservice.modal.ServiceCategory;
+import com.handyhub.Itemservice.modal.ServiceSubcategory;
+import com.handyhub.Itemservice.repo.ServiceCategoryRepository;
+import com.handyhub.Itemservice.repo.ServiceSubcategoryRepository;
 import com.handyhub.shared.exception.custom.DuplicateResourceException;
 import com.handyhub.shared.exception.custom.ResourceNotFoundException;
 import com.handyhub.user.dto.UserDTO;
@@ -17,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,14 +33,21 @@ public class WorkerProfileServiceImpl implements WorkerProfileService {
     private final RoleRepository roleRepository;
     private final SkillRepository skillRepository;
 
+    private final ServiceCategoryRepository serviceCategoryRepository;
+
+    private final ServiceSubcategoryRepository serviceSubcategoryRepository;
     public WorkerProfileServiceImpl(WorkerProfileRepository repository,
                                     UserRepository userRepository,
                                     RoleRepository roleRepository,
-                                    SkillRepository skillRepository) {
+                                    SkillRepository skillRepository,
+                                    ServiceSubcategoryRepository serviceSubcategoryRepository,
+                                    ServiceCategoryRepository serviceCategoryRepository) {
         this.repository = repository;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.skillRepository = skillRepository;
+        this.serviceSubcategoryRepository=serviceSubcategoryRepository;
+        this.serviceCategoryRepository=serviceCategoryRepository;
     }
 
     @Override
@@ -78,6 +90,20 @@ public class WorkerProfileServiceImpl implements WorkerProfileService {
             workerEntity.setSkills(skills);
         }
 
+        ServiceSubcategory subcategory = serviceSubcategoryRepository
+                .findById(dto.getSubCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Subcategory not found", "id", dto.getSubCategoryId()
+                ));
+           workerEntity.setServiceSubcategory(subcategory);
+
+        ServiceCategory category = serviceCategoryRepository
+                .findById(dto.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Category not found", "id", dto.getCategoryId()
+                ));
+        workerEntity.setServiceSubcategory(subcategory);
+        workerEntity.setServiceCategory(category);
 
         WorkerProfile savedWorker = repository.save(workerEntity);
         UserDTO savedUserDto = UserMapper.toDto(savedUser);
@@ -151,7 +177,19 @@ public class WorkerProfileServiceImpl implements WorkerProfileService {
             existingWorker.setSkills(skills);
         }
 
+        ServiceSubcategory subcategory = serviceSubcategoryRepository
+                .findById(dto.getSubCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Subcategory not found", "id", dto.getSubCategoryId()
+                ));
+        ServiceCategory category = serviceCategoryRepository
+                .findById(dto.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Category not found", "id", dto.getCategoryId()
+                ));
 
+        existingWorker.setServiceSubcategory(subcategory);
+        existingWorker.setServiceCategory(category);
         WorkerProfile savedWorker = repository.save(existingWorker);
         UserDTO savedUserDto = UserMapper.toDto(savedUser);
         return WorkerProfileMapper.toDTO(savedWorker, savedUserDto);
@@ -197,6 +235,13 @@ public class WorkerProfileServiceImpl implements WorkerProfileService {
     @Override
     public List<WorkerProfileDTO> getWorkersBySubCategory(Long subCategoryId) {
         return repository.findByServiceSubcategory_SubcategoryId(subCategoryId).stream()
+                .map(w -> WorkerProfileMapper.toDTO(w, UserMapper.toDto(w.getUser())))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<WorkerProfileDTO> getWorkersByCategory(Long categoryId) {
+        return repository.findByServiceCategory_CategoryId(categoryId).stream()
                 .map(w -> WorkerProfileMapper.toDTO(w, UserMapper.toDto(w.getUser())))
                 .collect(Collectors.toList());
     }

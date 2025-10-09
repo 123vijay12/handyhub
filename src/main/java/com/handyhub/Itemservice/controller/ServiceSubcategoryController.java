@@ -49,4 +49,5 @@ public class ServiceSubcategoryController {
         return ResponseEntity.ok(service.listByCategory(categoryId));
     }
 
+
 }

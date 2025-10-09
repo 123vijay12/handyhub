@@ -66,6 +66,11 @@ public class WorkerProfileController {
         return ResponseEntity.ok(service.getWorkersBySubCategory(id));
     }
 
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<WorkerProfileDTO>> getWorkersByCategory(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getWorkersByCategory(id));
+    }
+
     @GetMapping("/search")
     public ResponseEntity<List<WorkerProfileDTO>> searchWorkers(
             @RequestParam(required = false) Long subCategoryId,

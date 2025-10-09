@@ -1,6 +1,7 @@
 package com.handyhub.user.model;
 
 import com.handyhub.Itemservice.mapper.SubcategoryMapper;
+import com.handyhub.Itemservice.modal.ServiceCategory;
 import com.handyhub.Itemservice.modal.ServiceSubcategory;
 import jakarta.persistence.*;
 
@@ -39,6 +40,10 @@ public class WorkerProfile{
     @JoinColumn(name = "sub_category_id")
      private ServiceSubcategory serviceSubcategory;
     // getters & setters
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private ServiceCategory serviceCategory;
 
     public Long getId() {
         return id;
@@ -106,6 +111,14 @@ public class WorkerProfile{
 
     public void setServiceSubcategory(ServiceSubcategory serviceSubcategory) {
         this.serviceSubcategory = serviceSubcategory;
+    }
+
+    public ServiceCategory getServiceCategory() {
+        return serviceCategory;
+    }
+
+    public void setServiceCategory(ServiceCategory serviceCategory) {
+        this.serviceCategory = serviceCategory;
     }
 
     public void setRatingsReceived(Set<Rating> ratingsReceived) {

@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class HandyhubApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HandyhubApplication.class, args);
+		System.out.println("hello");
 	}
+
+
 
 }
