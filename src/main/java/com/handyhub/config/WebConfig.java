@@ -15,7 +15,7 @@ public class WebConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // Allow all paths
                         .allowedOrigins("*") // Allow all origins, or specify your frontend URL
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allow methods
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH") // Allow methods
                         .allowedHeaders("*") // Allow all headers
                         .allowCredentials(false); // Set to true if using cookies or auth headers
             }

@@ -10,50 +10,60 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/bookings")
 public class BookingController {
 
-    @Autowired
-    private BookingService bookingService;
+    @Autowired private BookingService bookingService;
 
-    // Create a new booking
     @PostMapping
-    public ResponseEntity<BookingDTO> createBooking(@RequestBody BookingDTO bookingDTO) {
-        BookingDTO createdBooking = bookingService.createBooking(bookingDTO);
-        return ResponseEntity.ok(createdBooking);
+    public ResponseEntity<BookingDTO> create(@RequestBody BookingDTO dto) {
+        return ResponseEntity.ok(bookingService.createBooking(dto));
     }
 
-    // Update booking status
+    @GetMapping("/{id}")
+    public ResponseEntity<BookingDTO> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(bookingService.getById(id));
+    }
+
     @PatchMapping("/{id}/status")
-    public ResponseEntity<BookingDTO> updateBookingStatus(
-            @PathVariable Long id,
-            @RequestParam String status) {
-
-        BookingStatus bookingStatus;
-        try {
-            bookingStatus = BookingStatus.valueOf(status.toUpperCase());
-        } catch (ValidationException e) {
-            throw new RuntimeException("Invalid booking status: " + status);
-        }
-
-        BookingDTO updatedBooking = bookingService.updateBookingStatus(id, bookingStatus);
-        return ResponseEntity.ok(updatedBooking);
+    public ResponseEntity<BookingDTO> updateStatus(@PathVariable Long id, @RequestParam String status) {
+        return ResponseEntity.ok(bookingService.updateBookingStatus(id, BookingStatus.valueOf(status.toUpperCase())));
     }
 
-
-    // Get all bookings for a customer
-    @GetMapping("/customer/{customerId}")
-    public ResponseEntity<List<BookingDTO>> getBookingsByCustomer(@PathVariable Long customerId) {
-        List<BookingDTO> bookings = bookingService.getBookingsByCustomer(customerId);
-        return ResponseEntity.ok(bookings);
+    @PatchMapping("/{id}/cancel")
+    public ResponseEntity<BookingDTO> cancel(@PathVariable Long id, @RequestBody Map<String, String> body) {
+        return ResponseEntity.ok(bookingService.cancelBooking(id, body.getOrDefault("reason", "Cancelled")));
     }
 
-    // Get all bookings for a worker
-    @GetMapping("/worker/{workerId}")
-    public ResponseEntity<List<BookingDTO>> getBookingsByWorker(@PathVariable Long workerId) {
-        List<BookingDTO> bookings = bookingService.getBookingsByWorker(workerId);
-        return ResponseEntity.ok(bookings);
+    @PatchMapping("/{id}")
+    public ResponseEntity<BookingDTO> patch(@PathVariable Long id, @RequestBody BookingDTO dto) {
+        return ResponseEntity.ok(bookingService.patchBooking(id, dto));
+    }
+
+    @GetMapping("/customer/{id}")
+    public ResponseEntity<List<BookingDTO>> byCustomer(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(bookingService.getBookingsByCustomer(id));
+    }
+
+    @GetMapping("/worker/{id}")
+    public ResponseEntity<List<BookingDTO>> byWorker(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(bookingService.getBookingsByWorker(id));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<BookingDTO>> search(
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String priority,
+            @RequestParam(required = false) Long workerId,
+            @RequestParam(required = false) Long customerId,
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) Long subcategoryId,
+            @RequestParam(required = false) String from,
+            @RequestParam(required = false) String to
+    ) {
+        return ResponseEntity.ok(bookingService.search(status, priority, workerId, customerId, categoryId, subcategoryId, from, to));
     }
 }
